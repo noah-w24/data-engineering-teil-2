@@ -34,7 +34,7 @@ console:
   enabled: false
 
 ingress:
-  minio:
+  console:
     enabled: true
     ingressClassName: nginx
     annotations:
@@ -45,11 +45,10 @@ ingress:
           - path: /
             pathType: ImplementationSpecific
     tls:
-      - secretName: minio-tls
+      - secretName: minio-console-tls
         hosts:
           - minio.student-qnly.dski23a.timebertt.dev
-  console:
-    enabled: false
+
 
 resources:
   requests:
