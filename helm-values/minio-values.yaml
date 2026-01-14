@@ -34,18 +34,33 @@ console:
   enabled: false
 
 ingress:
-  console:
+  minio:
     enabled: true
     ingressClassName: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
       - host: minio.student-qnly.dski23a.timebertt.dev
         paths:
           - path: /
             pathType: ImplementationSpecific
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
     tls:
-      - secretName: minio-console-tls
+      - secretName: minio-tls-secret
+        hosts:
+          - minio.student-qnly.dski23a.timebertt.dev
+
+  console:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - host: minio.student-qnly.dski23a.timebertt.dev
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+    tls:
+      - secretName: minio-console-tls-secret
         hosts:
           - minio.student-qnly.dski23a.timebertt.dev
 
