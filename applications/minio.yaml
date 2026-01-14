@@ -7,12 +7,15 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/noah-w24/data-engineering-teil-2.git
-    path: charts/minio
-    targetRevision: main
-    helm:
-      valueFiles:
-        - ../../helm-values/minio-values.yaml
+    - repoURL: https://openchart.choerodon.com.cn/choerodon/c7n
+      chart: minio
+      targetRevision: 5.3.0
+      helm:
+        valueFiles:
+          - $values/helm-values/postgres-values.yaml
+    - repoURL: https://github.com/noah-w24/data-engineering-teil-2.git
+      targetRevision: main
+      ref: values
 
   destination:
     server: https://kubernetes.default.svc
