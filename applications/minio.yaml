@@ -6,10 +6,10 @@ metadata:
 spec:
   project: default
 
-  source:
-    - repoURL: https://openchart.choerodon.com.cn/choerodon/c7n
+  sources:
+    - repoURL: https://solidcharts.github.io/helm-charts
       chart: minio
-      targetRevision: 5.3.0
+      targetRevision: 0.5.0
       helm:
         valueFiles:
           - $values/helm-values/postgres-values.yaml
