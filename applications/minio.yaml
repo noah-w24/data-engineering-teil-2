@@ -11,7 +11,7 @@ spec:
     targetRevision: latest
     helm:
       valueFiles:
-        - $values/helm-values/minio-values.yaml
+        - helm-values/minio-values.yaml
 
   destination:
     server: https://kubernetes.default.svc
