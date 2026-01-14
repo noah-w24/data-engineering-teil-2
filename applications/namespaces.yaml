@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/noah-w24/data-engineering-teil-2
+    repoURL: https://github.com/noah-w24/data-engineering-teil-2.git
     targetRevision: main
     path: namespaces
 

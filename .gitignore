@@ -1,2 +1,3 @@
 ./argo-setup-helm.txt
 ./connect_to_cluster.sh
+argo-setup-helm.txt
