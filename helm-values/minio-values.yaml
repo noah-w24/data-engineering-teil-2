@@ -64,7 +64,6 @@ ingress:
         hosts:
           - minio.student-qnly.dski23a.timebertt.dev
 
-
 resources:
   requests:
     memory: 512Mi
