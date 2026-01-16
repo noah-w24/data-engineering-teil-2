@@ -7,21 +7,15 @@ backendStore:
     host: "postgres-postgresql.data-storage.svc.cluster.local"
     port: 5432
     database: "ds_db"
-    driver: psycopg2
-
-  existingDatabaseSecret:
-    name: postgres-admin
-    usernameKey: postgres-user
-    passwordKey: postgres-password
+    user: "mlops"
+    password: "postgresadmin"
 
 artifactRoot:
   s3:
     enabled: true
     bucket: "hello-world-bucket"       # existing bucket in MinIO
-    existingSecret:
-      name: mlflow-minio
-      keyOfAccessKeyId: root-user
-      keyOfSecretAccessKey: root-password
+    awsAccessKeyId: "minioadmin"
+    awsSecretAccessKey: "minioadmin"
 
 
 extraEnvVars:
