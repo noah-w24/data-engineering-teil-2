@@ -5,22 +5,20 @@ metadata:
   namespace: argocd
 spec:
   project: default
-
   sources:
-    - repoURL: https://solidcharts.github.io/helm-charts
-      chart: minio
-      targetRevision: 0.5.0
-      helm:
-        valueFiles:
-          - $values/helm-values/postgres-values.yaml
-    - repoURL: https://github.com/noah-w24/data-engineering-teil-2.git
-      targetRevision: main
-      ref: values
+  - repoURL: https://charts.min.io/
+    chart: minio
+    targetRevision: 5.0.0
+    helm:
+      valueFiles:
+        - $values/helm-values/minio-values.yaml
+  - repoURL: https://github.com/noah-w24/data-engineering-teil-2.git
+    targetRevision: main
+    ref: values
 
   destination:
     server: https://kubernetes.default.svc
     namespace: data-storage
-
   syncPolicy:
     automated:
       prune: true
