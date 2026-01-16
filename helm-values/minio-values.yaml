@@ -1,73 +1,145 @@
-mode: standalone
-replicas: 1
-
-auth:
-  existingSecret: minio
-  rootUserSecretKey: root-user
-  rootPasswordSecretKey: root-password
-
+# -------------------------
+# Global
+# -------------------------
 global:
-  security:
-    allowInsecureImages: true
+  imageRegistry: ""
 
-persistence:
-  enabled: true
-  size: 10Gi
-  storageClass: local-path
-  accessModes:
-    - ReadWriteOnce
+nameOverride: ""
+fullnameOverride: ""
 
+# -------------------------
+# Authentication
+# -------------------------
+auth:
+  # Do NOT set rootUsername / rootPassword directly
+  existingRootUsernameSecret: minio
+  existingRootUsernameSecretKey: root-user
+  existingRootPasswordSecret: minio
+  existingRootPasswordSecretKey: root-password
+
+# -------------------------
+# MinIO configuration
+# -------------------------
+config:
+  browserEnabled: true
+  region: ""
+  domain: ""
+  serverUrl: ""
+
+# -------------------------
+# Image
+# -------------------------
 image:
   registry: quay.io
   repository: minio/minio
   tag: RELEASE.2023-09-30T07-02-29Z
   pullPolicy: IfNotPresent
 
-command:
-  - minio
-args:
-  - server
-  - /bitnami/minio/data
-  - "--address=:9000"
+imagePullSecrets: []
 
-console:
-  enabled: false
+# -------------------------
+# Replicas & rollout
+# -------------------------
+replicaCount: 1
 
+updateStrategy:
+  type: Recreate
+
+# -------------------------
+# Service account
+# -------------------------
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+  automountToken: true
+
+# -------------------------
+# Ports
+# -------------------------
+containerPorts:
+  minio: 9000
+  console: 9090
+
+# -------------------------
+# Security context
+# -------------------------
+podSecurityContext:
+  fsGroup: 1001
+
+securityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  runAsUser: 1001
+  runAsGroup: 1001
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+# -------------------------
+# Service
+# -------------------------
+service:
+  type: ClusterIP
+  annotations: {}
+  ports:
+    minio: 9000
+    console: 9090
+
+# -------------------------
+# Ingress
+# -------------------------
 ingress:
   minio:
     enabled: true
     ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
       - host: minio.student-qnly.dski23a.timebertt.dev
         paths:
           - path: /
             pathType: ImplementationSpecific
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
     tls:
-      - secretName: minio-tls-secret
+      - secretName: minio-api-tls
         hosts:
           - minio.student-qnly.dski23a.timebertt.dev
 
   console:
     enabled: true
     ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
-      - host: minio.student-qnly.dski23a.timebertt.dev
+      - host: minio-console.student-qnly.dski23a.timebertt.dev
         paths:
           - path: /
             pathType: ImplementationSpecific
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
     tls:
-      - secretName: minio-console-tls-secret
+      - secretName: minio-console-tls
         hosts:
-          - minio.student-qnly.dski23a.timebertt.dev
+          - minio-console.student-qnly.dski23a.timebertt.dev
 
+# -------------------------
+# Persistence
+# -------------------------
+persistence:
+  enabled: true
+  existingClaim: null
+  annotations: {}
+  storageClass: local-path
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  mountPath: /mnt/data
+
+# -------------------------
+# Resources
+# -------------------------
 resources:
   requests:
-    memory: 512Mi
     cpu: 250m
+    memory: 512Mi
   limits:
-    memory: 1Gi
     cpu: 500m
+    memory: 1Gi
