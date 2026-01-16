@@ -1,21 +1,25 @@
 backendStore:
   databaseMigration: true      # auto run migration on startup
   databaseConnectionCheck: true
-
+ 
   postgres:
     enabled: true             # we use your external Postgres
     host: "postgres-postgresql.data-storage.svc.cluster.local"
     port: 5432
     database: "ds_db"
-    user: "mlops"
-    password: "postgresadmin"
-
+  existingDatabaseSecret:
+    name: "postgres-admin"
+    usernameKey: "postgres-user"
+    passwordKey: "postgres-password"
+ 
 artifactRoot:
   s3:
     enabled: true
     bucket: "hello-world-bucket"       # existing bucket in MinIO
-    awsAccessKeyId: "minioadmin"
-    awsSecretAccessKey: "minioadmin"
+    existingSecret:
+      name: "minio"
+      keyOfAccessKeyId: "root-user"
+      keyOfSecretAccessKey: "root-password"
 
 
 extraEnvVars:
