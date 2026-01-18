@@ -7,9 +7,9 @@ spec:
   project: default
 
   sources:
-    - repoURL: https://groundhog2k.github.io/helm-charts/
-      chart: postgres
-      targetRevision: 1.6.1
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: postgresql
+      targetRevision: 18.2.0
       helm:
         valueFiles:
           - $values/helm-values/postgres-values.yaml
