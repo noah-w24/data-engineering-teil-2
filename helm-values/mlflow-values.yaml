@@ -18,8 +18,8 @@ artifactRoot:
     bucket: "hello-world-bucket"       # existing bucket in MinIO
     existingSecret:
       name: "minio"
-      keyOfAccessKeyId: "root-user"
-      keyOfSecretAccessKey: "root-password"
+      keyOfAccessKeyId: "rootUser"
+      keyOfSecretAccessKey: "rootPassword"
 
 
 extraEnvVars:
