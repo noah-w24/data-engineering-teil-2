@@ -7,9 +7,9 @@ spec:
   project: default
 
   sources:
-    - repoURL: https://cetic.github.io/helm-charts
+    - repoURL: https://groundhog2k.github.io/helm-charts/
       chart: postgresql
-      targetRevision: 0.2.5
+      targetRevision: 1.6.1
       helm:
         valueFiles:
           - $values/helm-values/postgres-values.yaml

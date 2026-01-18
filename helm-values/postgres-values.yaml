@@ -1,21 +1,35 @@
-# postgres-values.yaml
-auth:
-  existingSecret: postgres-admin
-  database: ds_db
-  username: mlops
-  secretKeys:
-    userPasswordKey: postgres-password
-
-primary:
-  persistence:
-    enabled: true
-    size: 10Gi
-    storageClass: local-path
+image:
+  repository: postgres
+  tag: "15"   # strongly recommended (MLflow compatible)
 
 service:
   type: ClusterIP
-  ports:
-    postgresql: 5432
+  port: 5432
+
+settings:
+  # Use the existing secret for the postgres superuser
+  existingSecret: postgres-admin
+
+  # Explicitly define authentication method
+  authMethod: md5
+
+userDatabase:
+  existingSecret: postgres-admin
+
+  name:
+    value: ds_db
+
+  user:
+    value: mlops
+
+  password:
+    secretKey: postgres-password
+
+storage:
+  requestedSize: 10Gi
+  className: local-path
+  accessModes:
+    - ReadWriteOnce
 
 metrics:
   enabled: false
