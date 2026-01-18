@@ -8,8 +8,8 @@ spec:
 
   sources:
     - repoURL: https://groundhog2k.github.io/helm-charts/
-      chart: postgresql
-      targetRevision: 1.6.0
+      chart: postgres
+      targetRevision: 1.6.1
       helm:
         valueFiles:
           - $values/helm-values/postgres-values.yaml
