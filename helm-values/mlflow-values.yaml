@@ -10,7 +10,7 @@ backendStore:
   existingDatabaseSecret:
     name: "postgres-admin"
     usernameKey: "postgres-user"
-    passwordKey: "postgres-password"
+    passwordKey: "POSTGRES_PASSWORD"
  
 artifactRoot:
   s3:
