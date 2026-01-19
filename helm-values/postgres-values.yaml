@@ -4,7 +4,7 @@ auth:
   database: ds_db
   username: mlops
   secretKeys:
-    userPasswordKey: POSTGRES_PASSWORD
+    userPasswordKey: postgres-password
 
 primary:
   persistence:
